@@ -1,0 +1,60 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	display: flex;
+}
+
+.calculator {
+	background-color: #E0218A;
+	display: flex;
+	flex-direction: column;
+	height: 400px;
+	padding: 10px;
+}
+
+.display-container {
+	padding: 10px 10px 0px 10px;
+	height: 50px;
+}
+
+.display {
+	display: flex;
+	justify-content: end;
+	background-color: hsl(330, 50%, 92%);
+	height: 30px;
+}
+
+button {
+	border: 1px black solid;
+	width: 60px;
+	height: 60px;
+	background-color: hsl(337, 100%, 89%);
+	color: hsl(337, 100%, 11%);
+}
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.row {
+	display: flex;
+	gap: 5px;
+}
+
+.row-one {
+	display: flex;
+	justify-content: end;
+}
+
+.number, .operator, .point {
+	border-radius: 100px;
+}
+
+.result {
+	border-radius: 0px;
+}
