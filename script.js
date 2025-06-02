@@ -43,6 +43,7 @@ let result = null;
 let pressedOperatorOnce = false;
 let lastPressedIsOp = false;
 let pressedResult = false;
+let broken = false;
 
 function reset(){
 	displayText.innerText = ``;
@@ -57,7 +58,16 @@ function reset(){
 
 buttons.addEventListener('click', (event) => {
 	let target = event.target;
-	if(target.className === 'number') {
+
+	if (broken){
+		reset();
+		broken = false;
+	}
+
+	if (operator === '÷' && target.innerText === '0'){
+		displayText.innerText = `don't start`;
+		broken = true;
+	} else if(target.className === 'number') {
 		if (pressedResult) {
 			reset();
 		}
@@ -99,7 +109,7 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = displayText.innerText.slice(0, -1);
 			operator = target.innerText;
 		} else {
-			if (pressedOperatorOnce === true){
+			if (pressedOperatorOnce){
 				num1 = result;
 				console.log(num1);
 				num2 = null;
