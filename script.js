@@ -127,11 +127,13 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		}
 	} else if (target.className === 'result') {
-		console.log(result);
-		displayText.innerText = +result.toFixed(2);
-		num1 = result;
-		num2 = null;
-		pressedResult = true;
+		if (result != null) {
+			console.log(result);
+			displayText.innerText = +result.toFixed(2);
+			num1 = result;
+			num2 = null;
+			pressedResult = true;
+		}
 	} else if (target.className === 'clear') {
 		reset();
 	}
