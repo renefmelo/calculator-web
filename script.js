@@ -39,22 +39,27 @@ function operate(num1, operator, num2){
 	}
 }
 
-let result = 0;
+let result = null;
 let pressedOperatorOnce = false;
 let lastPressedIsOp = false;
 let pressedResult = false;
+
+function reset(){
+	displayText.innerText = ``;
+	num1 = null;
+	num2 = null;
+	operator = null;
+	result = null;
+	pressedOperatorOnce = false;
+	lastPressedIsOp = false;
+	pressedResult = false;
+}
 
 buttons.addEventListener('click', (event) => {
 	let target = event.target;
 	if(target.className === 'number') {
 		if (pressedResult) {
-			displayText.innerText = ``;
-			num1 = null;
-			num2 = null;
-			operator = null;
-			result = 0;
-			pressedOperatorOnce = false;
-			pressedResult = false;
+			reset();
 		}
 		lastPressedIsOp = false;
 		switch (pressedOperatorOnce){
@@ -87,10 +92,12 @@ buttons.addEventListener('click', (event) => {
 		}
 		displayText.innerText = `${displayText.innerText}${target.innerText}`;
 	} else if (target.className === 'operator') {
+		pressedResult = false;
 		if (lastPressedIsOp){
 			// removes the operator pressed before this one from the display so it will be
 			// replaced with the new operator pressed.
 			displayText.innerText = displayText.innerText.slice(0, -1);
+			operator = target.innerText;
 		} else {
 			if (pressedOperatorOnce === true){
 				num1 = result;
@@ -103,14 +110,20 @@ buttons.addEventListener('click', (event) => {
 			operator = target.innerText;
 			lastPressedIsOp = true;
 		}
-		displayText.innerText = `${displayText.innerText}${target.innerText}`;
+
+		if (result != null){
+			displayText.innerText = `${+result.toFixed(2)}${target.innerText}`;
+		} else {
+			displayText.innerText = `${displayText.innerText}${target.innerText}`;
+		}
 	} else if (target.className === 'result') {
 		console.log(result);
-		displayText.innerText = result;
+		displayText.innerText = +result.toFixed(2);
 		num1 = result;
 		num2 = null;
 		pressedResult = true;
+	} else if (target.className === 'clear') {
+		reset();
 	}
-
 })
 //ideia: refazer pegando string do display e dando split com o operador p pegar os numeros e calcular.
