@@ -44,6 +44,8 @@ let pressedOperatorOnce = false;
 let lastPressedIsOp = false;
 let pressedResult = false;
 let broken = false;
+let currentNum = ``;
+let lastPressedIsPoint = false;
 
 function reset(){
 	displayText.innerText = ``;
@@ -77,9 +79,11 @@ buttons.addEventListener('click', (event) => {
 				if (num1 === null) {
 					num1 = Number(target.innerText);
 					console.log(num1);
+					currentNum = `num1`;
 				} else {
 					num1 = Number(`${num1}${target.innerText}`);
 					console.log(num1);
+					currentNum = `num1`;
 				}
 			break;
 			default:
@@ -88,20 +92,24 @@ buttons.addEventListener('click', (event) => {
 					result = operate(num1, operator, num2);
 					console.log(num2);
 					console.log(`result: ${result}`);
+					currentNum = `num2`;
 				} else if (pressedResult){
 					num1 = Number(`${num1}${target.innerText}`)
 					result = num1;
 					console.log(num1);
+					currentNum = `num1`;
 				} else {
 					num2 = Number(`${num2}${target.innerText}`);
 					result = operate(num1, operator, num2);
 					console.log(num2);
 					console.log(`result: ${result}`);
+					currentNum= `num2`;
 				}
 			break;
 		}
 		displayText.innerText = `${displayText.innerText}${target.innerText}`;
 	} else if (target.className === 'operator') {
+		lastPressedIsPoint = false;
 		pressedResult = false;
 		if (lastPressedIsOp){
 			// removes the operator pressed before this one from the display so it will be
@@ -122,20 +130,31 @@ buttons.addEventListener('click', (event) => {
 		}
 
 		if (result != null){
-			displayText.innerText = `${+result.toFixed(2)}${target.innerText}`;
+			displayText.innerText = `${+result.toFixed(11)}${target.innerText}`;
 		} else {
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		}
 	} else if (target.className === 'result') {
+		lastPressedIsPoint = false;
 		if (result != null) {
 			console.log(result);
-			displayText.innerText = +result.toFixed(2);
+			displayText.innerText = +result.toFixed(11);
 			num1 = result;
 			num2 = null;
 			pressedResult = true;
 		}
 	} else if (target.className === 'clear') {
 		reset();
+	} else if (target.className === 'point') {
+		if (currentNum === `num1` && !lastPressedIsPoint && !lastPressedIsOp && !pressedResult){
+			num1 = `${num1}${target.innerText}`;
+			displayText.innerText = `${displayText.innerText}${target.innerText}`;
+		} else if (currentNum === `num2` && !lastPressedIsPoint && !lastPressedIsOp && !pressedResult){
+			num2 = `${num2}${target.innerText}`
+			displayText.innerText = `${displayText.innerText}${target.innerText}`;
+		}
+		lastPressedIsPoint = true;
 	}
 })
-//ideia: refazer pegando string do display e dando split com o operador p pegar os numeros e calcular.
+
+// do the extra credits in separate branches
