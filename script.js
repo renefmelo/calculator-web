@@ -234,6 +234,71 @@ document.addEventListener(`keydown`, (e) => {
 		case `0`:
 			btZero.click();
 		break;
+
+		case `1`:
+			btOne.click();
+		break;
+
+		case `2`:
+			btTwo.click();
+		break;
+
+		case `3`:
+			btThree.click();
+		break;
+
+		case `4`:
+			btFour.click();
+		break;
+
+		case `5`:
+			btFive.click();
+		break;
+
+		case `6`:
+			btSix.click();
+		break;
+
+		case `7`:
+			btSeven.click();
+		break;
+
+		case `8`:
+			btEight.click();
+		break;
+
+		case `9`:
+			btNine.click();
+		break;
+
+		case `.`:
+			btDecimal.click();
+		break;
+
+		case `+`:
+			btPlus.click();
+		break;
+
+		case `-`:
+			btMinus.click();
+		break;
+
+		case `/`:
+			btDivide.click();
+		break;
+
+		case `*`:
+			btMult.click();
+		break;
+
+		case `=`:
+			btResult.click();
+		break;
+
+		case `Enter`:
+			document.activeElement.blur();
+			btResult.click();
+		break
 	}
 })
 
