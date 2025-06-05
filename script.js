@@ -25,7 +25,6 @@ let num2 = null;
 let result = null;
 
 let currentNum = ``;
-let broken = false;
 let operatorInEval = false;
 let lastPressedIsOp = false;
 let lastPressedIsResult = false;
@@ -71,7 +70,6 @@ function reset(){
 	result = null;
 	currentNum = ``;
 	displayText.innerText = ``;
-	broken = false;
 	operatorInEval = false;
 	lastPressedIsOp = false;
 	lastPressedIsResult = false;
@@ -120,16 +118,7 @@ function numIsDecimal(text){
 buttons.addEventListener('click', (event) => {
 	let target = event.target;
 
-	if (broken){
-		reset();
-		broken = false;
-	}
-
-	if (operator === '÷' && target.innerText === '0'){
-		displayText.innerText = `don't start`;
-		broken = true;
-
-	} else if(target.className === 'number') {
+	if (target.className === 'number') {
 		if (lastPressedIsResult) {
 			reset();
 		}
@@ -148,6 +137,7 @@ buttons.addEventListener('click', (event) => {
 				if (num2 === null){
 					num2 = Number(target.innerText);
 					result = operate(num1, operator, num2);
+					console.log(result);
 					currentNum = `num2`;
 				} else if (lastPressedIsResult){
 					num1 = Number(`${num1}${target.innerText}`)
