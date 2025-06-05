@@ -1,6 +1,5 @@
 const displayText = document.querySelector('.display-text');
 const buttons = document.querySelector('.buttons');
-
 const btZero = document.querySelector('#zero');
 const btOne = document.querySelector('#one');
 const btTwo = document.querySelector('#two');
@@ -11,7 +10,6 @@ const btSix = document.querySelector('#six');
 const btSeven = document.querySelector('#seven');
 const btEight = document.querySelector('#eight');
 const btNine = document.querySelector('#nine');
-
 const btBackspace = document.querySelector('.backspace');
 const btClear = document.querySelector('.clear');
 const btDivide = document.querySelector('#bt-divide');
@@ -20,6 +18,18 @@ const btMinus = document.querySelector('#bt-minus');
 const btPlus = document.querySelector('#bt-plus');
 const btDecimal = document.querySelector('#point');
 const btResult = document.querySelector('#result');
+
+let num1 = null;
+let operator = null;
+let num2 = null;
+let result = null;
+
+let currentNum = ``;
+let broken = false;
+let operatorInEval = false;
+let lastPressedIsOp = false;
+let lastPressedIsResult = false;
+let lastPressedIsPoint = false;
 
 function add(num1, num2) {
 	return num1 + num2;
@@ -36,10 +46,6 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
 	return num1 / num2;
 }
-
-let num1 = null;
-let operator = null;
-let num2 = null;
 
 function operate(num1, operator, num2){
 	switch(operator) {
@@ -58,25 +64,17 @@ function operate(num1, operator, num2){
 	}
 }
 
-let result = null;
-let operatorInEval = false;
-let lastPressedIsOp = false;
-let pressedResult = false;
-let broken = false;
-let currentNum = ``;
-let lastPressedIsPoint = false;
-
 function reset(){
-	displayText.innerText = ``;
 	num1 = null;
 	num2 = null;
 	operator = null;
 	result = null;
+	currentNum = ``;
+	displayText.innerText = ``;
+	broken = false;
 	operatorInEval = false;
 	lastPressedIsOp = false;
-	pressedResult = false;
-	broken = false;
-	currentNum = ``;
+	lastPressedIsResult = false;
 	lastPressedIsPoint = false;
 }
 
@@ -89,8 +87,8 @@ function isItNumber(text){
 	}
 }
 
-function displayLastDigit(displayText) {
-	let lastDigit = displayText.charAt(displayText.length -1);
+function displayLastDigit(text) {
+	let lastDigit = text.charAt(text.length -1);
 	let isItNum = isItNumber(lastDigit);
 
 	if (isItNum) {
@@ -102,6 +100,14 @@ function displayLastDigit(displayText) {
 	}
 }
 
+function evalHasOperator(text){
+	if (text.includes(`+`) || text.includes(`−`) || text.includes(`∗`) || text.includes(`÷`)){
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function numIsDecimal(text){
 	if (text.includes(`.`)){
 		return true;
@@ -110,13 +116,6 @@ function numIsDecimal(text){
 	}
 }
 
-function evalHasOperator(text){
-	if (text.includes(`+`) || text.includes(`−`) || text.includes(`∗`) || text.includes(`÷`)){
-		return true;
-	} else {
-		return false;
-	}
-}
 
 buttons.addEventListener('click', (event) => {
 	let target = event.target;
@@ -131,7 +130,7 @@ buttons.addEventListener('click', (event) => {
 		broken = true;
 
 	} else if(target.className === 'number') {
-		if (pressedResult) {
+		if (lastPressedIsResult) {
 			reset();
 		}
 		lastPressedIsOp = false;
@@ -154,7 +153,7 @@ buttons.addEventListener('click', (event) => {
 					console.log(num2);
 					console.log(`result: ${result}`);
 					currentNum = `num2`;
-				} else if (pressedResult){
+				} else if (lastPressedIsResult){
 					num1 = Number(`${num1}${target.innerText}`)
 					result = num1;
 					console.log(num1);
@@ -172,7 +171,7 @@ buttons.addEventListener('click', (event) => {
 
 	} else if (target.className === 'operator') {
 		lastPressedIsPoint = false;
-		pressedResult = false;
+		lastPressedIsResult = false;
 		if (lastPressedIsOp){
 			// removes the operator pressed before this one from the display so it will be
 			// replaced with the new operator pressed.
@@ -204,16 +203,16 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = +result.toFixed(11);
 			num1 = result;
 			num2 = null;
-			pressedResult = true;
+			lastPressedIsResult = true;
 		}
 
 	} else if (target.className === 'clear') {
 		reset();
 
 	} else if (target.className === 'point') {
-		if (pressedResult){
+		if (lastPressedIsResult){
 			reset();
-			pressedResult = false;
+			lastPressedIsResult = false;
 		} else if (currentNum === `num1` && !numIsDecimal(`${num1}`) && displayLastDigit(displayText.innerText) === `number`){
 			num1 = `${num1}${target.innerText}`;
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
@@ -224,7 +223,7 @@ buttons.addEventListener('click', (event) => {
 		lastPressedIsPoint = true;
 
 	} else if (target.className === 'backspace') {
-		if (pressedResult){
+		if (lastPressedIsResult){
 			reset();
 		} else if (displayLastDigit(displayText.innerText) === `operator`) {
 			operator = null;
