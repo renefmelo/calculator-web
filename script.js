@@ -303,5 +303,3 @@ document.addEventListener(`keydown`, (e) => {
 		break;
 	}
 })
-
-// do the extra credits in separate branches
