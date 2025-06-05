@@ -1,1 +1,2 @@
-# calculator-web
+# the odin project: calculator
+
