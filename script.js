@@ -110,7 +110,7 @@ function numIsDecimal(text){
 	}
 }
 
-function evalHasOperator(){
+function evalHasOperator(text){
 	if (text.includes(`+`) || text.includes(`−`) || text.includes(`∗`) || text.includes(`÷`)){
 		return true;
 	} else {
