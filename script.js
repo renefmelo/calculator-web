@@ -40,7 +40,7 @@ function operate(num1, operator, num2){
 }
 
 let result = null;
-let pressedOperatorOnce = false;
+let operatorInEval = false;
 let lastPressedIsOp = false;
 let pressedResult = false;
 let broken = false;
@@ -53,9 +53,31 @@ function reset(){
 	num2 = null;
 	operator = null;
 	result = null;
-	pressedOperatorOnce = false;
+	operatorInEval = false;
 	lastPressedIsOp = false;
 	pressedResult = false;
+}
+
+function isItNumber(text){
+	let testNumber = Number(text);
+	if (Number.isNaN(testNumber)){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function displayLastDigit(displayText) {
+	let lastDigit = displayText.charAt(displayText.length -1);
+	let isItNum = isItNumber(lastDigit);
+
+	if (isItNum) {
+		return `number`;
+	} else if (lastDigit === `.`) {
+		return `.`;
+	} else {
+		return `operator`;
+	}
 }
 
 buttons.addEventListener('click', (event) => {
@@ -69,12 +91,13 @@ buttons.addEventListener('click', (event) => {
 	if (operator === '÷' && target.innerText === '0'){
 		displayText.innerText = `don't start`;
 		broken = true;
+
 	} else if(target.className === 'number') {
 		if (pressedResult) {
 			reset();
 		}
 		lastPressedIsOp = false;
-		switch (pressedOperatorOnce){
+		switch (operatorInEval){
 			case false:
 				if (num1 === null) {
 					num1 = Number(target.innerText);
@@ -108,6 +131,7 @@ buttons.addEventListener('click', (event) => {
 			break;
 		}
 		displayText.innerText = `${displayText.innerText}${target.innerText}`;
+
 	} else if (target.className === 'operator') {
 		lastPressedIsPoint = false;
 		pressedResult = false;
@@ -117,23 +141,24 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = displayText.innerText.slice(0, -1);
 			operator = target.innerText;
 		} else {
-			if (pressedOperatorOnce){
+			if (operatorInEval){
 				num1 = result;
 				console.log(num1);
 				num2 = null;
 			} else {
-				pressedOperatorOnce = true;
+				operatorInEval = true;
 			}
 			console.log(target.innerText);
 			operator = target.innerText;
 			lastPressedIsOp = true;
 		}
 
-		if (result != null){
+		if (result != null && operatorInEval){
 			displayText.innerText = `${+result.toFixed(11)}${target.innerText}`;
 		} else {
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		}
+
 	} else if (target.className === 'result') {
 		lastPressedIsPoint = false;
 		if (result != null) {
@@ -143,8 +168,10 @@ buttons.addEventListener('click', (event) => {
 			num2 = null;
 			pressedResult = true;
 		}
+
 	} else if (target.className === 'clear') {
 		reset();
+
 	} else if (target.className === 'point') {
 		if (currentNum === `num1` && !lastPressedIsPoint && !lastPressedIsOp && !pressedResult){
 			num1 = `${num1}${target.innerText}`;
@@ -154,6 +181,29 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		}
 		lastPressedIsPoint = true;
+
+	} else if (target.className === 'backspace') {
+		if (displayLastDigit(displayText.innerText) === `operator`) {
+			operator = null;
+			currentNum = `num1`;
+			operatorInEval = false;
+		} else if (displayLastDigit(displayText.innerText) === `.` || displayLastDigit(displayText.innerText) === `number`) {
+			if (currentNum === `num1`) {
+				let stringNum1 = `${num1}`;
+				stringNum1 = stringNum1.slice(0, -1);
+				num1 = Number(stringNum1);
+				result = operate(num1, operator, num2);
+				console.log(num1);
+			} else if (currentNum === `num2`) {
+				let stringNum2 = `${num2}`;
+				stringNum2 = stringNum2.slice(0, -1);
+				num2 = Number(stringNum2);
+				result = operate(num1, operator, num2);
+				console.log(num2);
+			}
+			lastPressedIsPoint = false;
+		}
+		displayText.innerText = displayText.innerText.slice(0, -1);
 	}
 })
 
