@@ -55,6 +55,18 @@ button {
 	1px 2px 2.5px -2.5px hsl(328 75% 29% / 0.34);
 }
 
+button:hover {
+	background-color: hsl(337, 90%, 79%);
+}
+
+#result {
+	background-color: hsl(208, 100%, 87%);
+}
+
+#result:hover {
+	background-color: hsl(208, 90%, 77%);
+}
+
 .buttons {
 	display: flex;
 	flex-direction: column;
