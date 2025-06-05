@@ -138,11 +138,9 @@ buttons.addEventListener('click', (event) => {
 			case false:
 				if (num1 === null) {
 					num1 = Number(target.innerText);
-					console.log(num1);
 					currentNum = `num1`;
 				} else {
 					num1 = Number(`${num1}${target.innerText}`);
-					console.log(num1);
 					currentNum = `num1`;
 				}
 			break;
@@ -150,19 +148,14 @@ buttons.addEventListener('click', (event) => {
 				if (num2 === null){
 					num2 = Number(target.innerText);
 					result = operate(num1, operator, num2);
-					console.log(num2);
-					console.log(`result: ${result}`);
 					currentNum = `num2`;
 				} else if (lastPressedIsResult){
 					num1 = Number(`${num1}${target.innerText}`)
 					result = num1;
-					console.log(num1);
 					currentNum = `num1`;
 				} else {
 					num2 = Number(`${num2}${target.innerText}`);
 					result = operate(num1, operator, num2);
-					console.log(num2);
-					console.log(`result: ${result}`);
 					currentNum= `num2`;
 				}
 			break;
@@ -180,12 +173,10 @@ buttons.addEventListener('click', (event) => {
 		} else {
 			if (evalHasOperator(displayText.innerText)){
 				num1 = result;
-				console.log(num1);
 				num2 = null;
 			} else {
 				operatorInEval = true;
 			}
-			console.log(target.innerText);
 			operator = target.innerText;
 			lastPressedIsOp = true;
 		}
@@ -199,7 +190,6 @@ buttons.addEventListener('click', (event) => {
 	} else if (target.className === 'result') {
 		lastPressedIsPoint = false;
 		if (result != null) {
-			console.log(result);
 			displayText.innerText = +result.toFixed(11);
 			num1 = result;
 			num2 = null;
@@ -235,13 +225,11 @@ buttons.addEventListener('click', (event) => {
 				stringNum1 = stringNum1.slice(0, -1);
 				num1 = Number(stringNum1);
 				result = operate(num1, operator, num2);
-				console.log(num1);
 			} else if (currentNum === `num2`) {
 				let stringNum2 = `${num2}`;
 				stringNum2 = stringNum2.slice(0, -1);
 				num2 = Number(stringNum2);
 				result = operate(num1, operator, num2);
-				console.log(num2);
 			}
 			lastPressedIsPoint = false;
 		}
