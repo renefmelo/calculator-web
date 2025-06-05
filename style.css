@@ -16,6 +16,10 @@ body {
 	flex-direction: column;
 	height: 400px;
 	padding: 10px;
+	box-shadow: 0.3px 0.5px 0.7px hsl(0 0% 71% / 0.21),
+	0.8px 1.7px 2.3px -0.6px hsl(0 0% 71% / 0.24),
+	1.9px 3.8px 5.2px -1.3px hsl(0 0% 71% / 0.28),
+	4.4px 8.9px 12.1px -1.9px hsl(0 0% 71% / 0.31);
 }
 
 .display-container {
@@ -29,11 +33,15 @@ body {
 	align-items: center;
 	background-color: hsl(330, 50%, 92%);
 	height: 60px;
+	box-shadow: 0.25px 0.25px 3px 0.5px hsl(330 50% 65% / 0.34) inset,
+	0.5px 0.5px 6px 1px hsl(330 50% 70% / 0.34) inset,
+	1px 1px 12px 2px hsl(330 50% 70% / 0.34) inset;
 }
 
 .display-text {
 	font-size: 25px;
 	color: hsl(337, 100%, 11%);
+	margin-right: 3px;
 }
 
 button {
@@ -42,6 +50,9 @@ button {
 	height: 55px;
 	background-color: hsl(337, 100%, 89%);
 	color: hsl(337, 100%, 11%);
+	box-shadow: 0.3px 0.5px 0.7px hsl(328 75% 29% / 0.34),
+	0.4px 0.8px 1px -1.2px hsl(328 75% 29% / 0.34),
+	1px 2px 2.5px -2.5px hsl(328 75% 29% / 0.34);
 }
 
 .buttons {
