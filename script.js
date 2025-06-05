@@ -102,6 +102,22 @@ function displayLastDigit(displayText) {
 	}
 }
 
+function numIsDecimal(text){
+	if (text.includes(`.`)){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function evalHasOperator(){
+	if (text.includes(`+`) || text.includes(`−`) || text.includes(`∗`) || text.includes(`÷`)){
+		return true;
+	} else {
+		return false;
+	}
+}
+
 buttons.addEventListener('click', (event) => {
 	let target = event.target;
 
@@ -163,7 +179,7 @@ buttons.addEventListener('click', (event) => {
 			displayText.innerText = displayText.innerText.slice(0, -1);
 			operator = target.innerText;
 		} else {
-			if (operatorInEval){
+			if (evalHasOperator(displayText.innerText)){
 				num1 = result;
 				console.log(num1);
 				num2 = null;
@@ -175,7 +191,7 @@ buttons.addEventListener('click', (event) => {
 			lastPressedIsOp = true;
 		}
 
-		if (result != null && operatorInEval){
+		if (result != null && evalHasOperator(displayText.innerText)){
 			displayText.innerText = `${+result.toFixed(11)}${target.innerText}`;
 		} else {
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
@@ -195,17 +211,19 @@ buttons.addEventListener('click', (event) => {
 		reset();
 
 	} else if (target.className === 'point') {
-		if (currentNum === `num1` && !lastPressedIsPoint && !lastPressedIsOp && !pressedResult){
+		if (currentNum === `num1` && !numIsDecimal(`${num1}`) && displayLastDigit(displayText.innerText) === `number`){
 			num1 = `${num1}${target.innerText}`;
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
-		} else if (currentNum === `num2` && !lastPressedIsPoint && !lastPressedIsOp && !pressedResult){
+		} else if (currentNum === `num2` && !numIsDecimal(`${num2}`) && displayLastDigit(displayText.innerText) === `number`){
 			num2 = `${num2}${target.innerText}`
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		}
 		lastPressedIsPoint = true;
 
 	} else if (target.className === 'backspace') {
-		if (displayLastDigit(displayText.innerText) === `operator`) {
+		if (pressedResult){
+			reset();
+		} else if (displayLastDigit(displayText.innerText) === `operator`) {
 			operator = null;
 			currentNum = `num1`;
 			operatorInEval = false;
