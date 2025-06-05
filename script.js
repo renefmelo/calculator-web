@@ -298,7 +298,11 @@ document.addEventListener(`keydown`, (e) => {
 		case `Enter`:
 			document.activeElement.blur();
 			btResult.click();
-		break
+		break;
+
+		case `Backspace`:
+			btBackspace.click();
+		break;
 	}
 })
 
