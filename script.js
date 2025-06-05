@@ -146,7 +146,7 @@ buttons.addEventListener('click', (event) => {
 					currentNum = `num1`;
 				}
 			break;
-			default:
+			case true:
 				if (num2 === null){
 					num2 = Number(target.innerText);
 					result = operate(num1, operator, num2);
