@@ -1,6 +1,25 @@
 const displayText = document.querySelector('.display-text');
 const buttons = document.querySelector('.buttons');
 
+const btZero = document.querySelector('#zero');
+const btOne = document.querySelector('#one');
+const btTwo = document.querySelector('#two');
+const btThree = document.querySelector('#three');
+const btFour = document.querySelector('#four');
+const btFive = document.querySelector('#five');
+const btSix = document.querySelector('#six');
+const btSeven = document.querySelector('#seven');
+const btEight = document.querySelector('#eight');
+const btNine = document.querySelector('#nine');
+
+const btBackspace = document.querySelector('.backspace');
+const btClear = document.querySelector('.clear');
+const btDivide = document.querySelector('#bt-divide');
+const btMult = document.querySelector('#bt-mult');
+const btMinus = document.querySelector('#bt-minus');
+const btPlus = document.querySelector('#bt-plus');
+const btDecimal = document.querySelector('#point');
+const btResult = document.querySelector('#result');
 
 function add(num1, num2) {
 	return num1 + num2;
@@ -56,6 +75,9 @@ function reset(){
 	operatorInEval = false;
 	lastPressedIsOp = false;
 	pressedResult = false;
+	broken = false;
+	currentNum = ``;
+	lastPressedIsPoint = false;
 }
 
 function isItNumber(text){
@@ -204,6 +226,14 @@ buttons.addEventListener('click', (event) => {
 			lastPressedIsPoint = false;
 		}
 		displayText.innerText = displayText.innerText.slice(0, -1);
+	}
+})
+
+document.addEventListener(`keydown`, (e) => {
+	switch (e.key){
+		case `0`:
+			btZero.click();
+		break;
 	}
 })
 
