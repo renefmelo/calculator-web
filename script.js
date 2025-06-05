@@ -211,7 +211,10 @@ buttons.addEventListener('click', (event) => {
 		reset();
 
 	} else if (target.className === 'point') {
-		if (currentNum === `num1` && !numIsDecimal(`${num1}`) && displayLastDigit(displayText.innerText) === `number`){
+		if (pressedResult){
+			reset();
+			pressedResult = false;
+		} else if (currentNum === `num1` && !numIsDecimal(`${num1}`) && displayLastDigit(displayText.innerText) === `number`){
 			num1 = `${num1}${target.innerText}`;
 			displayText.innerText = `${displayText.innerText}${target.innerText}`;
 		} else if (currentNum === `num2` && !numIsDecimal(`${num2}`) && displayLastDigit(displayText.innerText) === `number`){
